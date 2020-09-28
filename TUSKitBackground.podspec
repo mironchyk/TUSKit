@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = "TUSKit"
+  s.name             = "TUSKitBackground"
   s.version          = "1.4.2"
   s.summary          = "The tus client for iOS."
   s.description      = <<-DESC
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/tus/tus-ios-client"
   s.license          = 'MIT'
   s.author           = { "Michael Avila" => "me@michaelavila.com", "Mark Robert Masterson" => "mark@masterson.io" }
-  s.source           = { :git => "https://github.com/tus/tus-ios-client.git", :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/mironchyk/TUSKit.git',  :tag => 'background_session' }
 
   s.ios.deployment_target = "8.0"
   s.osx.deployment_target = "10.10"
