@@ -242,4 +242,20 @@
     [self.tasks[task] task:task didSendBodyData:bytesSent totalBytesSent:totalBytesSent totalBytesExpectedToSend:totalBytesExpectedToSend];
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    TUSResumableUpload *upload = self.tasks[task];
+    switch (upload.operation) {
+        case TUSUploadFileOperation:
+            [upload processUploadResponse:task.response error:error];
+            break;
+        case TUSCReateFileOperation:
+            [upload processCreateFileInBackground:task.response error:error];
+            break;
+        case TUSCheckFileOperation:
+            [upload processCheckFileResponse:task.response error:error];
+            break;
+     
+    }
+}
+
 @end

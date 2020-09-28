@@ -11,13 +11,19 @@
 //  Copyright (c) 2016 Findyr
 
 @import Foundation;
-
+#define BackgroundTUSSessionIdentifier @"TUSBackgroundURLSession"
 typedef NS_ENUM(NSInteger, TUSResumableUploadState) {
     TUSResumableUploadStateCreatingFile,
     TUSResumableUploadStateCheckingFile,
     TUSResumableUploadStateUploadingFile,
     TUSResumableUploadStateComplete
 };
+
+typedef enum TUSOperation : NSInteger {
+    TUSCReateFileOperation,
+    TUSCheckFileOperation,
+    TUSUploadFileOperation
+}TUSOperation;
 
 
 typedef void (^TUSUploadResultBlock)(NSURL* _Nonnull fileURL);
@@ -28,6 +34,7 @@ typedef void (^TUSUploadProgressBlock)(int64_t bytesWritten, int64_t bytesTotal)
 @property (readwrite, copy) _Nullable TUSUploadResultBlock resultBlock;
 @property (readwrite, copy) _Nullable TUSUploadFailureBlock failureBlock;
 @property (readwrite, copy) _Nullable TUSUploadProgressBlock progressBlock;
+@property (nonatomic) TUSOperation operation;
 
 /**
  The unique ID for the upload object
@@ -69,6 +76,8 @@ typedef void (^TUSUploadProgressBlock)(int64_t bytesWritten, int64_t bytesTotal)
  Lazily instantiate the chunkSize for the upload
  */
 - (void)setChunkSize:(long long)chunkSize;
-
+- (void)processUploadResponse:(nullable NSURLResponse *)response error : (nullable NSError*)error;
+-(void)processCheckFileResponse:(nullable NSURLResponse *)response error : (nullable NSError*)error;
+-(void)processCreateFileInBackground:(nullable NSURLResponse *)response error : (nullable NSError*)error;
 @end
 
